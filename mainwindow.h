@@ -73,6 +73,8 @@ private:
     void UpdateView();
     void closeScenes();
 
+    QList<int> calculateState(QList<QPair<int,int>> stateIndex);
 
-};
+
+}
 #endif // MAINWINDOW_H

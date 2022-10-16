@@ -103,3 +103,4 @@ void CustomScene::reDo(){
     undoIndex.remove(undoIndex.size()-1);
     stateIndex.append(QPair<int,int>(lastState.first,- lastState.second));
 }
+

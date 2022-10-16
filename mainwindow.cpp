@@ -75,6 +75,10 @@ void MainWindow::keyPressEvent(QKeyEvent *e){
     if (e->key()==Qt::Key_Control){
         on_select_toolButton_clicked();
     }
+    if (e->key()==Qt::Key_Escape){
+        scenes.at(pageIndex)->isRubberBandActive = false;
+        on_rubberBand_finished();
+    }
 }
 
 
@@ -167,13 +171,31 @@ void MainWindow::on_pushButton_clicked()
             tr("Open Images"), "../../");
     dirPath.append("/"+dirName+"%1.png");
 
-    for (int i = 0; i < scenes.size(); i++) {
-        for (QGraphicsRectItem* item: scenes.at(i)->rubberBands){
+    for (auto scene: scenes) {
+        auto state = calculateState(scene->stateIndex);
+        for (int i = 0; i < scene->rubberBands.size(); i++){
+            if (state.at(i)<=0){
+                continue;
+            }
+            QGraphicsRectItem* item = scene->rubberBands.at(i);
             QImage image = scenes.at(i)->image.copy(item->rect().toRect());
             image.save(dirPath.arg(tempNumber));
             qDebug() << dirPath.arg(tempNumber);
             tempNumber++;
         }
     }
+}
+
+QList<int> MainWindow::calculateState(QList<QPair<int,int>> stateIndex){
+    QList<int> result = QList<int>();
+    for(auto state: stateIndex){
+        if (state.first>=result.size()){
+            result.append(1);
+        }
+        else{
+            result[state.first] += state.second;
+        }
+    }
+    return result;
 }
 

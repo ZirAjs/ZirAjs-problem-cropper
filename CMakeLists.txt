@@ -21,8 +21,6 @@ set(PROJECT_SOURCES
         mainwindow.ui
         customscene.cpp
         customscene.h
-        rectitem.h
-        rectitem.cpp
 )
 set(CMAKE_AUTOUIC ON)
 
