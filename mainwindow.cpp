@@ -56,6 +56,12 @@ void MainWindow::on_actionOpen_Image_form_png_jpg_triggered()
     // ui
     ui->pageNumber_label->setText(QString(" / ")+QString::number((int)scenes.size()));
     ui->pageIndex_lineEdit->setText(QString::number(pageIndex+1));
+    ui->select_toolButton->setEnabled(true);
+    ui->groupBox->setEnabled(true);
+    ui->toolButton_4->setEnabled(true);
+    ui->toolButton_3->setEnabled(true);
+    ui->widget->setEnabled(true);
+    ui->pushButton->setEnabled(true);
     UpdateView();
 }
 
@@ -184,6 +190,7 @@ void MainWindow::on_pushButton_clicked()
             tempNumber++;
         }
     }
+    QMessageBox::information(this, "info", "Images are successfully saved!", QMessageBox::Ok);
 }
 
 QList<int> MainWindow::calculateState(QList<QPair<int,int>> stateIndex){

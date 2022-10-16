@@ -89,7 +89,6 @@ public:
 
     void unDo();
     void reDo();
-    void removeAll();
 
 signals:
     void rubberBandFinished();

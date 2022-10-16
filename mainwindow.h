@@ -14,6 +14,7 @@
 #include <QRubberBand>
 #include <QMouseEvent>
 #include <QKeyEvent>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -76,5 +77,5 @@ private:
     QList<int> calculateState(QList<QPair<int,int>> stateIndex);
 
 
-}
+};
 #endif // MAINWINDOW_H
