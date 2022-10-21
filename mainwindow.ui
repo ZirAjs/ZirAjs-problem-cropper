@@ -422,18 +422,19 @@
     <addaction name="separator"/>
     <addaction name="actionProcess_and_save_cropped_images"/>
    </widget>
-   <widget class="QMenu" name="menuEdit">
-    <property name="title">
-     <string>Edit</string>
-    </property>
-   </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuoptions">
+    <property name="title">
+     <string>options</string>
+    </property>
+    <addaction name="actionoutput_image_dpi_setting"/>
+   </widget>
    <addaction name="menuFiles"/>
-   <addaction name="menuEdit"/>
+   <addaction name="menuoptions"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionOpen_Image_from_Pdf">
@@ -449,6 +450,11 @@
   <action name="actionProcess_and_save_cropped_images">
    <property name="text">
     <string>Process and save cropped images</string>
+   </property>
+  </action>
+  <action name="actionoutput_image_dpi_setting">
+   <property name="text">
+    <string>output image dpi setting</string>
    </property>
   </action>
  </widget>

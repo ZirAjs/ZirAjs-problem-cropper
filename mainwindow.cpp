@@ -38,6 +38,10 @@ void MainWindow::on_actionOpen_Image_form_png_jpg_triggered()
 {
 	fileNames = QFileDialog::getOpenFileNames(this,
 		tr("Open Images"), "C:/Users/junse/Desktop/ProblemCropper/testfolder", tr("Image Files (*.png *.jpg)"));
+    if(fileNames.isEmpty()){
+        //exit
+        return;
+    }
 	pageIndex = 0;
 	dirName = fileNames[0].section('/', -2, -2);
 
@@ -69,6 +73,79 @@ void MainWindow::on_actionOpen_Image_form_png_jpg_triggered()
 	ui->widget->setEnabled(true);
 	ui->pushButton->setEnabled(true);
 	UpdateView();
+}
+
+void MainWindow::on_actionOpen_Image_from_Pdf_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Open Images"), "C:/Users/junse/Desktop/ProblemCropper/testfolder", tr("Image Files (*.pdf)"));
+    if(fileName.isEmpty() || fileName.isNull()){
+        //exit
+        return;
+    }
+    pageIndex = 0;
+    dirName = fileName.section('/', -2, -2);
+
+    /*setup directory*/
+    QDir dir("./temp");
+    if (!dir.exists()){
+        dir.mkpath(".");
+        dir.setPath("./temp");
+    }
+    else{
+        /*empty the directory if exists*/
+        dir.setNameFilters(QStringList() << "*.*");
+        dir.setFilter(QDir::Files);
+        foreach(QString dirFile, dir.entryList())
+        {
+            dir.remove(dirFile);
+        }
+    }
+
+    /*make png files out of pdf*/
+    QProcess myProcess(this);
+    QString command = QString("./pdftopng.exe -r %1 \"%2\" \"%3/%4/temp\"").arg(dpi).arg(fileName, QDir::currentPath(), dir.dirName());
+    myProcess.start(command);
+    myProcess.waitForFinished();
+    myProcess.close();
+    qDebug() << command;
+
+    // ./temp가 비었는지 확인
+    if (dir.isEmpty(QDir::NoDotAndDotDot|QDir::AllEntries)){
+        QMessageBox::warning(this,"Error", "Cannot convert pdf to png.\nMaybe missing 'pdftopng.exe'?\nAsk the developer for further help.",QMessageBox::Ok);
+        return;
+    }
+
+    // 기존에 존재하던 scenes 삭제
+    for (int i=scenes.size()-1 ; i>=0; i--){
+        auto temp = scenes.at(i);
+        scenes.remove(i);
+        delete temp;
+    }
+
+    // set scenes
+    foreach(QString dirFile, dir.entryList())
+    {
+        QImage image(dir.absoluteFilePath(dirFile));
+        QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+        CustomScene* tempScene = new CustomScene();
+        tempScene->addItem(item);
+        tempScene->image = image;
+        connect(tempScene, &CustomScene::rubberBandFinished, this, &MainWindow::on_rubberBand_finished);
+        scenes.append(tempScene);
+    }
+    graphicsView->setScene(scenes.at(pageIndex));
+
+    // ui
+    ui->pageNumber_label->setText(QString(" / ") + QString::number((int)scenes.size()));
+    ui->pageIndex_lineEdit->setText(QString::number(pageIndex + 1));
+    ui->select_toolButton->setEnabled(true);
+    ui->groupBox->setEnabled(true);
+    ui->toolButton_4->setEnabled(true);
+    ui->toolButton_3->setEnabled(true);
+    ui->widget->setEnabled(true);
+    ui->pushButton->setEnabled(true);
+    UpdateView();
 }
 
 void MainWindow::closeScenes() {
@@ -181,6 +258,8 @@ void MainWindow::on_pushButton_clicked()
 	int tempNumber = 1;
 	QString dirPath = QFileDialog::getExistingDirectory(this,
 		tr("Open Images"), "../../");
+    QString realDirPath = dirPath;
+    realDirPath.detach();
 	dirPath.append("/" + dirName + "_%1.png");
 
     for (auto scene : scenes) {
@@ -196,7 +275,8 @@ void MainWindow::on_pushButton_clicked()
 			tempNumber++;
 		}
 	}
-	QMessageBox::information(this, "info", "Images are successfully saved!", QMessageBox::Ok);
+    QMessageBox::information(this, "info", "Images are successfully saved!", QMessageBox::Ok);
+    QProcess::startDetached(QString("explorer /root,\"%1\"").arg(realDirPath));
 }
 
 QList<int> MainWindow::calculateState(QList<QPair<int, int>> stateIndex) {
@@ -210,5 +290,25 @@ QList<int> MainWindow::calculateState(QList<QPair<int, int>> stateIndex) {
         result[state.first] += state.second;
 	}
 	return result;
+}
+
+
+
+
+
+void MainWindow::on_actionProcess_and_save_cropped_images_triggered()
+{
+    on_pushButton_clicked();
+}
+
+
+void MainWindow::on_actionoutput_image_dpi_setting_triggered()
+{
+    bool ok;
+    int dpi = QInputDialog::getInt(this, "Set DPI", "DPI should be between 50 and 400",400,50,400, 10, &ok);
+    if (ok){
+        this->dpi = dpi;
+    }
+
 }
 

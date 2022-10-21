@@ -30,6 +30,10 @@ void CustomScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 	}
 
 	origin = event->scenePos().toPoint();
+    if (origin.x()>this->width() || origin.y()>this->height()){
+        emit rubberBandFinished();
+        isRubberBandActive = false;
+    }
 
 	QGraphicsEllipseItem* item = new QGraphicsEllipseItem(origin.x() - 20, origin.y() - 20, 40, 40);
 	item->setBrush(Qt::green);

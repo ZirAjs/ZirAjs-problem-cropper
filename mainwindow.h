@@ -15,6 +15,8 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QMessageBox>
+#include <QProcess>
+#include <QInputDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -38,6 +40,7 @@ public:
 
     int pageIndex;
     float resizeFactor;
+    int dpi;
 
 
 private slots:
@@ -67,6 +70,12 @@ private slots:
     void keyPressEvent(QKeyEvent *event);
 
     void on_pushButton_clicked();
+
+    void on_actionOpen_Image_from_Pdf_triggered();
+
+    void on_actionProcess_and_save_cropped_images_triggered();
+
+    void on_actionoutput_image_dpi_setting_triggered();
 
 private:
     Ui::MainWindow *ui;

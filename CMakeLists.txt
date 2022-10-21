@@ -24,6 +24,7 @@ set(PROJECT_SOURCES
 )
 set(CMAKE_AUTOUIC ON)
 
+
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(ProblemCropper
         MANUAL_FINALIZATION
@@ -48,7 +49,6 @@ else()
 endif()
 
 target_link_libraries(ProblemCropper PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-
 set_target_properties(ProblemCropper PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
@@ -56,6 +56,7 @@ set_target_properties(ProblemCropper PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
+
 
 install(TARGETS ProblemCropper
     BUNDLE DESTINATION .
