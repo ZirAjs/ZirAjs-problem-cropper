@@ -101,8 +101,6 @@ public slots:
 
     void mouseMoveEvent(QGraphicsSceneMouseEvent *);
 
-    void keyPressEvent(QKeyEvent *event);
-
 };
 
 #endif // CUSTOMSCENE_H

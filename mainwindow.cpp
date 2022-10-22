@@ -16,6 +16,11 @@ MainWindow::MainWindow(QWidget* parent)
 	scenes = QVector<CustomScene*>();
 
 	resizeFactor = 1;     // default value
+    this->dpi = 350; //default
+
+    // focus policy
+    this->setFocusPolicy(Qt::StrongFocus);
+    ui->graphicsView->setFocusProxy(this);
 }
 
 MainWindow::~MainWindow()
@@ -55,7 +60,7 @@ void MainWindow::on_actionOpen_Image_form_png_jpg_triggered()
 	for (int i = 0; i < fileNames.size(); i++) {
 		QImage image(fileNames[i]);
 		QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-		CustomScene* tempScene = new CustomScene();
+        CustomScene* tempScene = new CustomScene(this);
 		tempScene->addItem(item);
 		tempScene->image = image;
 		connect(tempScene, &CustomScene::rubberBandFinished, this, &MainWindow::on_rubberBand_finished);
@@ -128,7 +133,7 @@ void MainWindow::on_actionOpen_Image_from_Pdf_triggered()
     {
         QImage image(dir.absoluteFilePath(dirFile));
         QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-        CustomScene* tempScene = new CustomScene();
+        CustomScene* tempScene = new CustomScene(this);
         tempScene->addItem(item);
         tempScene->image = image;
         connect(tempScene, &CustomScene::rubberBandFinished, this, &MainWindow::on_rubberBand_finished);
@@ -161,13 +166,25 @@ void MainWindow::resizeEvent(QResizeEvent*) {
 
 
 void MainWindow::keyPressEvent(QKeyEvent* e) {
-	if (e->key() == Qt::Key_Control) {
+    if (e->key() == Qt::Key_T && ui->select_toolButton->isEnabled()) {
 		on_select_toolButton_clicked();
 	}
-	if (e->key() == Qt::Key_Escape) {
+    if (e->key() == Qt::Key_Escape && !ui->select_toolButton->isEnabled()) {
 		scenes.at(pageIndex)->isRubberBandActive = false;
 		on_rubberBand_finished();
 	}
+    if (e->matches(QKeySequence::Undo) && ui->toolButton_3->isEnabled()){
+        on_toolButton_3_clicked();
+    }
+    if (e->matches(QKeySequence::Redo) && ui->toolButton_4->isEnabled()){
+        on_toolButton_4_clicked();
+    }
+    if (e->matches(QKeySequence::ZoomIn) && ui->pushButton_4->isEnabled()){
+        on_pushButton_4_pressed();
+    }
+    if (e->matches(QKeySequence::ZoomOut) && ui->pushButton_5->isEnabled()){
+        on_pushButton_5_pressed();
+    }
 }
 
 
@@ -305,7 +322,7 @@ void MainWindow::on_actionProcess_and_save_cropped_images_triggered()
 void MainWindow::on_actionoutput_image_dpi_setting_triggered()
 {
     bool ok;
-    int dpi = QInputDialog::getInt(this, "Set DPI", "DPI should be between 50 and 400",400,50,400, 10, &ok);
+    int dpi = QInputDialog::getInt(this, "Set DPI", "DPI should be between 50 and 400\nDefault DPI is 350.",this->dpi,50,400, 10, &ok);
     if (ok){
         this->dpi = dpi;
     }

@@ -14,7 +14,7 @@ CustomScene::CustomScene(QWidget* parent)
 	rubberBands = QVector<QGraphicsRectItem*>();
 	stateIndex = QList<QPair<int, int>>();
 	undoIndex = QList<QPair<int, int>>();
-	tempElipsePair = ElipsePair();
+    tempElipsePair = ElipsePair();
 	//    statusBar = new QStatusBar(this->parent);
 	//    statusBar->show();
 }
@@ -73,18 +73,6 @@ void CustomScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 	}
 
 	emit rubberBandFinished();
-}
-
-void CustomScene::keyPressEvent(QKeyEvent* e)
-{
-	//    if (e->key() != Qt::Key_Escape){
-	//        return;
-	//    }
-	//    if (!isRubberBandActive){
-	//        return;
-	//    }
-	//    isRubberBandActive = false;
-	//    emit rubberBandFinished();
 }
 
 void CustomScene::unDo() {
