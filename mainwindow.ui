@@ -426,6 +426,11 @@
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionmanual"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout"/>
+    <addaction name="actionSource_Code"/>
+    <addaction name="actionAbout_QT"/>
    </widget>
    <widget class="QMenu" name="menuoptions">
     <property name="title">
@@ -455,6 +460,26 @@
   <action name="actionoutput_image_dpi_setting">
    <property name="text">
     <string>output image dpi setting</string>
+   </property>
+  </action>
+  <action name="actionmanual">
+   <property name="text">
+    <string>manual</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>Blog</string>
+   </property>
+  </action>
+  <action name="actionSource_Code">
+   <property name="text">
+    <string>Source Code</string>
+   </property>
+  </action>
+  <action name="actionAbout_QT">
+   <property name="text">
+    <string>About QT</string>
    </property>
   </action>
  </widget>

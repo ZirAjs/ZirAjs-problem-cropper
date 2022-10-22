@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget* parent)
     // focus policy
     this->setFocusPolicy(Qt::StrongFocus);
     ui->graphicsView->setFocusProxy(this);
+    this->setWindowIcon(QPixmap(":/resources/logo.ico"));
 }
 
 MainWindow::~MainWindow()
@@ -179,12 +180,6 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
     if (e->matches(QKeySequence::Redo) && ui->toolButton_4->isEnabled()){
         on_toolButton_4_clicked();
     }
-    if (e->matches(QKeySequence::ZoomIn) && ui->pushButton_4->isEnabled()){
-        on_pushButton_4_pressed();
-    }
-    if (e->matches(QKeySequence::ZoomOut) && ui->pushButton_5->isEnabled()){
-        on_pushButton_5_pressed();
-    }
 }
 
 
@@ -327,5 +322,30 @@ void MainWindow::on_actionoutput_image_dpi_setting_triggered()
         this->dpi = dpi;
     }
 
+}
+
+
+void MainWindow::on_actionmanual_triggered()
+{
+    QDesktopServices::openUrl(manualUrl);
+}
+
+
+void MainWindow::on_actionAbout_QT_triggered()
+{
+    QApplication::aboutQt();
+}
+
+
+void MainWindow::on_actionSource_Code_triggered()
+{
+    QDesktopServices::openUrl(SourceCode);
+}
+
+
+void MainWindow::on_actionAbout_triggered()
+{
+
+    QDesktopServices::openUrl(Blog);
 }
 

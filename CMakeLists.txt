@@ -25,10 +25,12 @@ set(PROJECT_SOURCES
 set(CMAKE_AUTOUIC ON)
 
 
+set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/resources/icon.rc")
+
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(ProblemCropper
         MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
+        ${PROJECT_SOURCES} ${app_icon_resource_windows}
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET ProblemCropper APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -48,13 +50,17 @@ else()
     endif()
 endif()
 
-target_link_libraries(ProblemCropper PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(ProblemCropper PRIVATE Qt${QT_VERSION_MAJOR}::Widgets )
 set_target_properties(ProblemCropper PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
+)
+qt_add_resources(ProblemCropper "resources"
+    PREFIX "/"
+    FILES resources/logo.ico
 )
 
 
@@ -65,3 +71,4 @@ install(TARGETS ProblemCropper
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(ProblemCropper)
 endif()
+
