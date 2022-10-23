@@ -16,9 +16,9 @@
 
 ## 설치 방법
 
-Release에서 다운받으실 수 있습니다.(아직은 올리지않음)
+Release에서 다운받으실 수 있습니다.
 
-다운 받은 이후, 추가 프로그램 설치가 필요합니다. ZirAjs-problem-cropper는 pdf→png 변환에 xpdf라는 프로그램을 이용합니다. 따라서 [xpdf홈페이지](https://www.xpdfreader.com/download.html)에서 "Xpdf command line tools" 중 'windows'을 다운받고, 압축을 해제한 뒤 `bin64`의 `pdftopng.exe`을 ZirAjs-problem-cropper폴더에 넣으시면 됩니다.
+다운받은 이후 pdf를 이미지로 변환해서 읽어오는 기능을 사용하기 위해서는 추가 프로그램 설치가 필요합니다. ZirAjs-problem-cropper는 pdf→png 변환에 xpdf라는 프로그램을 이용합니다. 따라서 [xpdf홈페이지](https://www.xpdfreader.com/download.html)에서 "Xpdf command line tools" 중 'windows'을 다운받고, 압축을 해제한 뒤 `bin64`의 `pdftopng.exe`을 ZirAjs-problem-cropper폴더에 넣으시면 됩니다.
 
 ## 사용법
 
