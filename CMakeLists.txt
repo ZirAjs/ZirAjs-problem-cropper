@@ -60,7 +60,7 @@ set_target_properties(ProblemCropper PROPERTIES
 )
 qt_add_resources(ProblemCropper "resources"
     PREFIX "/"
-    FILES resources/logo.ico
+    FILES resources/logo_256.ico
 )
 
 

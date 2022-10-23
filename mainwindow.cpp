@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget* parent)
     // focus policy
     this->setFocusPolicy(Qt::StrongFocus);
     ui->graphicsView->setFocusProxy(this);
-    this->setWindowIcon(QPixmap(":/resources/logo.ico"));
+    this->setWindowIcon(QPixmap(":/resources/logo_256.ico"));
 }
 
 MainWindow::~MainWindow()
