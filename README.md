@@ -1,2 +1,3 @@
 # ZirAjs-problem-cropper
-작성 예정
+
+## mater branch를 봐주세요!
