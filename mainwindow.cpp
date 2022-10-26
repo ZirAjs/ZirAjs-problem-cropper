@@ -130,7 +130,7 @@ void MainWindow::on_actionOpen_Image_from_Pdf_triggered()
     }
 
     // set scenes
-    foreach(QString dirFile, dir.entryList())
+    foreach(QString dirFile, dir.entryList(QDir::AllEntries|QDir::NoDotAndDotDot))
     {
         QImage image(dir.absoluteFilePath(dirFile));
         QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
@@ -140,11 +140,15 @@ void MainWindow::on_actionOpen_Image_from_Pdf_triggered()
         connect(tempScene, &CustomScene::rubberBandFinished, this, &MainWindow::on_rubberBand_finished);
         scenes.append(tempScene);
     }
-    graphicsView->setScene(scenes.at(pageIndex));
+
+    if (scenes.size()==0){
+        QMessageBox::warning(this,"Error", "Cannot load pdf to scene.\nAsk the developer for further help.",QMessageBox::Ok);
+        return;
+    }
+    ui->pageIndex_lineEdit->setText(QString::number(pageIndex + 1));
 
     // ui
     ui->pageNumber_label->setText(QString(" / ") + QString::number((int)scenes.size()));
-    ui->pageIndex_lineEdit->setText(QString::number(pageIndex + 1));
     ui->select_toolButton->setEnabled(true);
     ui->groupBox->setEnabled(true);
     ui->toolButton_4->setEnabled(true);
