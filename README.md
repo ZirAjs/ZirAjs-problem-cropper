@@ -10,15 +10,15 @@
 - 캡쳐 순서대로 이미지를 폴더에 저장
 - (추가예정) ~~캡쳐한 이미지를 hwp파일로 저장~~
 
-이 기능을 잘 활용하면 작업을 더 편하게 할 수 있을 것입니다.
+이 기능을 잘 활용하면 작업을 더 편하게 할 수 있을 것입니다.정확한 실행 화면을 보려면 [블로그](https://zirajs.tistory.com/12)를 확인해주세요
 
 예를 들어 폴더명\[고2 2021년 10월 학력평가 - 물리1\] 아래 시험지 pdf를 둔 이후 캡쳐를 완료하고 저장을 하면 "고2 2021년 10월 학력평가 - 물리1_1", "고2 2021년 10월 학력평가 - 물리1_2" ... "고2 2021년 10월 학력평가 - 물리1_20" 이처럼 이미지로 저장되서 관리가 쉬울 것입니다. (hwp로 저장하면 훨신 더 간편할 예정이고요.)
 
 ## 설치 방법
 
-Release에서 다운받으실 수 있습니다.(아직은 올리지않음)
+Release에서 다운받으실 수 있습니다.
 
-다운 받은 이후, 추가 프로그램 설치가 필요합니다. ZirAjs-problem-cropper는 pdf→png 변환에 xpdf라는 프로그램을 이용합니다. 따라서 [xpdf홈페이지](https://www.xpdfreader.com/download.html)에서 "Xpdf command line tools" 중 'windows'을 다운받고, 압축을 해제한 뒤 `bin64`의 `pdftopng.exe`을 ZirAjs-problem-cropper폴더에 넣으시면 됩니다.
+다운받은 이후 pdf를 이미지로 변환해서 읽어오는 기능을 사용하기 위해서는 추가 프로그램 설치가 필요합니다. ZirAjs-problem-cropper는 pdf→png 변환에 xpdf라는 프로그램을 이용합니다. 따라서 [xpdf홈페이지](https://www.xpdfreader.com/download.html)에서 "Xpdf command line tools" 중 'windows'을 다운받고, 압축을 해제한 뒤 `bin64`의 `pdftopng.exe`을 ZirAjs-problem-cropper폴더에 넣으시면 됩니다.
 
 ## 사용법
 
@@ -39,7 +39,6 @@ Release에서 다운받으실 수 있습니다.(아직은 올리지않음)
 
 ## 기타
 
-- pdf 페이지의 수가 많거나 pdi가 높다면 처리하는데 시간이 조금 걸릴 수 있습니다.
-- select버튼 단축키(ctrl키)를 만들었으나 키입력이 씹히는 현상이 있어서 제대로 작동하지 않습니다.
+- pdf 페이지의 수가 많거나 di가 높다면 처리하는데 시간이 조금 걸릴 수 있습니다.
 
 필요한 곳에 써주시면 감사하겠습니다.
