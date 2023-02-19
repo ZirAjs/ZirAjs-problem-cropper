@@ -16,6 +16,7 @@
 #include <QKeyEvent>
 #include <QStatusBar>
 #include <QImage>
+#include <QRubberBand>
 
 class ElipsePair {
   private:
@@ -67,6 +68,8 @@ public:
     QWidget* parent;
 
     QVector<QGraphicsRectItem*> rubberBands;
+    QVector<QRubberBand*> visualRubberBands;
+    QRubberBand* visualRubberBand;
 
     QPoint origin;
     QPoint destination;
@@ -75,6 +78,7 @@ public:
     //QStatusBar* statusBar;
 
     bool isRubberBandActive;
+    bool isVisualRubberBandActive;
 
     ElipsePair tempElipsePair;
 

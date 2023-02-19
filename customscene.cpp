@@ -11,10 +11,12 @@ CustomScene::CustomScene(QWidget* parent)
 	this->setParent(parent);
 	this->parent = parent;
 	isRubberBandActive = false;
+    isVisualRubberBandActive = false;
 	rubberBands = QVector<QGraphicsRectItem*>();
 	stateIndex = QList<QPair<int, int>>();
 	undoIndex = QList<QPair<int, int>>();
     tempElipsePair = ElipsePair();
+    visualRubberBands = QVector<QRubberBand*>();
 	//    statusBar = new QStatusBar(this->parent);
 	//    statusBar->show();
 }
@@ -38,13 +40,20 @@ void CustomScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 	QGraphicsEllipseItem* item = new QGraphicsEllipseItem(origin.x() - 20, origin.y() - 20, 40, 40);
 	item->setBrush(Qt::green);
 	tempElipsePair.setFirst(item);
-	this->addItem(item);
+    this->addItem(item);
 
-	qDebug() << origin;
+    visualRubberBand = new QRubberBand(QRubberBand::Rectangle);
+    visualRubberBand->show();
+    this->addWidget(visualRubberBand);
+    visualRubberBands.append(visualRubberBand);
+    isVisualRubberBandActive = true;
 }
 
 void CustomScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
+    if (isVisualRubberBandActive){
+        visualRubberBand->setGeometry(QRect(origin,event->scenePos().toPoint()).normalized());
+    }
 }
 
 void CustomScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
@@ -64,6 +73,7 @@ void CustomScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 	rubberBands.append(rubberBand);
 	this->addItem(rubberBand);
 	isRubberBandActive = false;
+    isVisualRubberBandActive = false;
 
 
 	//state management
@@ -81,6 +91,7 @@ void CustomScene::unDo() {
     }
 	QPair<int, int> lastState = stateIndex.last();
 	this->removeItem(rubberBands.at(lastState.first));
+    visualRubberBands.at(lastState.first)->hide();
 	//state management
 	undoIndex.append(QPair<int, int>(lastState.first, -lastState.second));
 	stateIndex.remove(stateIndex.size() - 1);
@@ -94,6 +105,7 @@ void CustomScene::reDo() {
 	}
 	QPair<int, int> lastState = undoIndex.last();
 	this->addItem(rubberBands.at(lastState.first));
+    visualRubberBands.at(lastState.first)->hide();
 	//state management
 	undoIndex.remove(undoIndex.size() - 1);
 	stateIndex.append(QPair<int, int>(lastState.first, -lastState.second));

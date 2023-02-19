@@ -111,11 +111,15 @@ void MainWindow::on_actionOpen_Image_from_Pdf_triggered()
     /*make png files out of pdf*/
     QProcess myProcess(this);
     QString command = QString("./pdftopng.exe -r %1 \"%2\" \"%3/%4/temp\"").arg(dpi).arg(fileName, QDir::currentPath(), dir.dirName());
+    QMessageBox* msBox = new QMessageBox(this);
+    msBox->setWindowTitle("reading pdf...\nIt may take some time");
+    msBox->show();
     myProcess.start(command);
-    myProcess.waitForFinished();
+    myProcess.waitForFinished(-1);
     myProcess.close();
+    msBox->close();
+    msBox->deleteLater();
     qDebug() << command;
-
     // ./temp가 비었는지 확인
     if (dir.isEmpty(QDir::NoDotAndDotDot|QDir::AllEntries)){
         QMessageBox::warning(this,"Error", "Cannot convert pdf to png.\nMaybe missing 'pdftopng.exe'?\nAsk the developer for further help.",QMessageBox::Ok);
@@ -176,6 +180,7 @@ void MainWindow::keyPressEvent(QKeyEvent* e) {
 	}
     if (e->key() == Qt::Key_Escape && !ui->select_toolButton->isEnabled()) {
 		scenes.at(pageIndex)->isRubberBandActive = false;
+        scenes.at(pageIndex)->isVisualRubberBandActive = false;
 		on_rubberBand_finished();
 	}
     if (e->matches(QKeySequence::Undo) && ui->toolButton_3->isEnabled()){
@@ -273,7 +278,10 @@ void MainWindow::on_pushButton_clicked()
 	//name of imagefile.
 	int tempNumber = 1;
 	QString dirPath = QFileDialog::getExistingDirectory(this,
-		tr("Open Images"), "../../");
+        tr("Open Images"), "../../");
+    if(dirPath.isEmpty() || dirPath.isNull()){
+        return;
+    }
     QString realDirPath = dirPath;
     realDirPath.detach();
 	dirPath.append("/" + dirName + "_%1.png");
