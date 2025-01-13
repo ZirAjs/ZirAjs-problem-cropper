@@ -15,6 +15,9 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QMessageBox>
+#include <QProcess>
+#include <QInputDialog>
+#include <QDesktopServices>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -38,7 +41,11 @@ public:
 
     int pageIndex;
     float resizeFactor;
+    int dpi;
 
+    const QString manualUrl = "https://github.com/ZirAjs/ZirAjs-problem-cropper/blob/master/README.md";
+    const QString Blog = "https://zirajs.tistory.com/";
+    const QString SourceCode = "https://github.com/ZirAjs/ZirAjs-problem-cropper/tree/master";
 
 private slots:
     void on_actionOpen_Image_form_png_jpg_triggered();
@@ -67,6 +74,20 @@ private slots:
     void keyPressEvent(QKeyEvent *event);
 
     void on_pushButton_clicked();
+
+    void on_actionOpen_Image_from_Pdf_triggered();
+
+    void on_actionProcess_and_save_cropped_images_triggered();
+
+    void on_actionoutput_image_dpi_setting_triggered();
+
+    void on_actionmanual_triggered();
+
+    void on_actionAbout_QT_triggered();
+
+    void on_actionSource_Code_triggered();
+
+    void on_actionAbout_triggered();
 
 private:
     Ui::MainWindow *ui;
